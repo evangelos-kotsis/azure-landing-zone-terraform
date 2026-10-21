@@ -1,6 +1,14 @@
+locals {
+  tags = {
+    project     = var.project
+    environment = var.environment
+    managed_by  = "terraform"
+  }
+}
+
 resource "azurerm_resource_group" "main" {
-  name     = "rg-lz-dev"
-  location = "westeurope"
+  name     = "rg-lz-${var.environment}"
+  location = var.location
 
   tags = {
     project     = "azure-landing-zone"
