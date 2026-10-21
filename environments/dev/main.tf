@@ -3,8 +3,8 @@ resource "azurerm_resource_group" "main" {
   location = "westeurope"
 
   tags = {
-    project    = "azure-landing-zone"
-    enviroment = "dev"
-    managed_by = "terraform"
+    project     = "azure-landing-zone"
+    environment = "dev"
+    managed_by  = "terraform"
   }
 }
