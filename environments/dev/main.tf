@@ -1,5 +1,6 @@
 locals {
   tags = {
+    owner       = "evangelos"
     project     = var.project
     environment = var.environment
     managed_by  = "terraform"
