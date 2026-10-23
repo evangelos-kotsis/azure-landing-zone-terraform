@@ -51,3 +51,39 @@ moved {
   from = azurerm_subnet.app
   to   = module.network.azurerm_subnet.this["snet-app"]
 }
+
+resource "azurerm_network_security_group" "app" {
+  name                = "nsg-app-${var.environment}"
+  location            = azurerm_resource_group.main.location
+  resource_group_name = azurerm_resource_group.main.name
+  tags                = local.tags
+
+  security_rule {
+    name                       = "Allow-8080-From-Web-Subnet"
+    priority                   = 100
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "8080"
+    source_address_prefix      = "10.10.1.0/24"
+    destination_address_prefix = "*"
+  }
+
+  security_rule {
+    name                       = "Deny-All-Inbound"
+    priority                   = 4096
+    direction                  = "Inbound"
+    access                     = "Deny"
+    protocol                   = "*"
+    source_port_range          = "*"
+    destination_port_range     = "*"
+    source_address_prefix      = "*"
+    destination_address_prefix = "*"
+  }
+}
+
+resource "azurerm_subnet_network_security_group_association" "app" {
+  subnet_id                 = module.network.subnet_ids["snet-app"]
+  network_security_group_id = azurerm_network_security_group.app.id
+}
