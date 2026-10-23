@@ -7,6 +7,8 @@ resource "azurerm_virtual_network" "this" {
 }
 
 resource "azurerm_subnet" "this" {
+    #checkov:skip=CKV2_AZURE_31: NSG is associated by the caller in environments/dev/network.tf
+    
   for_each = var.subnets
 
   name                 = each.key
