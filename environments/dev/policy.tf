@@ -41,7 +41,7 @@ resource "azurerm_subscription_policy_assignment" "require_owner_tag" {
 
   parameters = jsonencode({
     tagName = { value = "owner" }
-    effect  = { value = "Audit" }
+    effect  = { value = "Deny" }
   })
 }
 
